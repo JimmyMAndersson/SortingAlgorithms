@@ -1,8 +1,7 @@
 extension Array where Element: Comparable {
   
   public mutating func quickSort() {
-    var slice = self[0..<self.endIndex]
-    quickSort(&slice)
+    quickSort(&self[...])
   }
   
   private func quickSort(_ array: inout ArraySlice<Element>) {
@@ -13,11 +12,8 @@ extension Array where Element: Comparable {
     sortPivot(in: &array)
     let pivot = partition(&array)
     
-    var firstSlice = array[array.startIndex..<pivot]
-    var secondSlice = array[pivot + 1..<array.endIndex]
-    
-    quickSort(&firstSlice)
-    quickSort(&secondSlice)
+    quickSort(&array[array.startIndex..<pivot])
+    quickSort(&array[pivot + 1..<array.endIndex])
   }
   
   private func partition(_ array: inout ArraySlice<Element>) -> ArraySlice<Element>.Index {
@@ -61,3 +57,8 @@ extension Array where Element: Comparable {
     }
   }
 }
+
+
+var arr = [1,4,2,5,3,4]
+arr.quickSort()
+print(arr)
